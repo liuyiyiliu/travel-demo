@@ -25,7 +25,8 @@ import java.util.Random;
 @WebServlet(name = "UserServlet",urlPatterns = "/userServlet")
 public class UserServlet extends BaseServlet {
 
-    private UserServiceImpl userService = (UserServiceImpl)BeansFactory.getBeans("userService");
+    private UserServiceImpl userService = (UserServiceImpl)BeansFactory
+            .getBeans("userService");
 
     protected void validatephone(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String phone = req.getParameter("phone");

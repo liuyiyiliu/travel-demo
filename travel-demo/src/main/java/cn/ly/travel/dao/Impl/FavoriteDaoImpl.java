@@ -16,14 +16,15 @@ import java.util.List;
  */
 public class FavoriteDaoImpl implements FavoriteDao {
     JdbcTemplate template = new JdbcTemplate(JDBCUtils.getDataSource());
+
     @Override
     public Favorite findFavoriteByUidAndRid(int rid, int uid) {
         String sql = "select * from tab_favorite where rid = ? and uid = ?";
         Favorite favorite = null;
         try {
-            favorite = template.queryForObject(sql,new BeanPropertyRowMapper<Favorite>
+            favorite = template.queryForObject(sql, new BeanPropertyRowMapper<Favorite>
                     (Favorite.class), rid, uid);
-        }catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
         }
 
@@ -33,7 +34,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
     @Override
     public void insertFavorite(Favorite favorite) {
         String sql = "insert into tab_favorite values(?,?,?)";
-        template.update(sql,favorite.getRoute().getRid(),favorite.getDate(),favorite.getUser().getUid());
+        template.update(sql, favorite.getRoute().getRid(), favorite.getDate(), favorite.getUser().getUid());
     }
 
     @Override

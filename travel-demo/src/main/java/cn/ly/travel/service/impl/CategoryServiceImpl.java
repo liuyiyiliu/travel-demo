@@ -15,8 +15,9 @@ import java.util.List;
  * @author ly
  * @date 2019/2/15 13:29
  */
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     private CategoryDaoImpl categoryDao = (CategoryDaoImpl) BeansFactory.getBeans("categoryDao");
+
     @Override
     public String findAllCategorys() {
         long time1 = System.currentTimeMillis();
@@ -25,16 +26,16 @@ public class CategoryServiceImpl implements CategoryService{
         String json = jedis.get("categorys");
         long time2 = System.currentTimeMillis();
         //如果redis中没获取到，那么从数据库获取数据
-        if(StringUtils.isEmpty(json)){
+        if (StringUtils.isEmpty(json)) {
             long time3 = System.currentTimeMillis();
             List<Category> categoryList = categoryDao.findAllCategorys();
             json = JSON.toJSONString(categoryList);
             long time4 = System.currentTimeMillis();
-            System.out.println("从数据库耗时:"+ (time4-time3));
-            jedis.set("categorys",json);
+            System.out.println("从数据库耗时:" + (time4 - time3));
+            jedis.set("categorys", json);
 
-        }else{
-            System.out.println("从Redis耗时:"+(time2-time1));
+        } else {
+            System.out.println("从Redis耗时:" + (time2 - time1));
         }
         jedis.close();
         return json;

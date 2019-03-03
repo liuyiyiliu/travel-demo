@@ -13,6 +13,7 @@ import cn.ly.travel.util.JDBCUtils;
 import com.alibaba.fastjson.JSON;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -28,16 +29,17 @@ import java.util.Map;
 public class FavoriteServiceImpl implements FavoriteService {
     private FavoriteDao favoriteDao = new FavoriteDaoImpl();
     private RouteDao routeDao = new RouteDaoImpl();
+
     @Override
     public String findFavoriteByUidAndRid(int rid, int uid) {
         Favorite favorite = favoriteDao.findFavoriteByUidAndRid(rid, uid);
         //声明一个Map保存数据
-        Map<String,String> map = new HashMap<>();
-        if(favorite == null){
+        Map<String, String> map = new HashMap<>();
+        if (favorite == null) {
             //未收藏
-            map.put("isShow","yes");
-        }else{
-            map.put("isShow","no");
+            map.put("isShow", "yes");
+        } else {
+            map.put("isShow", "no");
         }
         String json = JSON.toJSONString(map);
         return json;
@@ -52,7 +54,7 @@ public class FavoriteServiceImpl implements FavoriteService {
         TransactionSynchronizationManager.initSynchronization();
         //使用工具类获取与当前想成绑定的连接对象
         Connection connection = DataSourceUtils.getConnection(JDBCUtils.getDataSource());
-        Map<String,String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         //开启事物
         try {
             connection.setAutoCommit(false);
@@ -81,17 +83,17 @@ public class FavoriteServiceImpl implements FavoriteService {
                 connection.rollback();
 
                 //给出响应,表示服务器异常
-                map.put("message","no");
-            }catch (SQLException e2){
+                map.put("message", "no");
+            } catch (SQLException e2) {
                 e2.printStackTrace();
             }
             e.printStackTrace();
-        }finally {
+        } finally {
             //释放资源
-            try{
+            try {
                 //重新开启自动提交,再放回连接池
                 connection.setAutoCommit(true);
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             //清空当前连接和线程的绑定,并且放回连接池
@@ -99,7 +101,7 @@ public class FavoriteServiceImpl implements FavoriteService {
         }
         //3.调用dao再次查询当前旅游线路信息的收藏数量
         Route route = routeDao.findRouteDetailsByRid(rid);
-        map.put("message",route.getCount()+"");
+        map.put("message", route.getCount() + "");
         String json = JSON.toJSONString(map);
 
         return json;
@@ -110,14 +112,14 @@ public class FavoriteServiceImpl implements FavoriteService {
         PageBean pageBean = new PageBean();
         //当前页
         pageBean.setCurrentPage(currentPage);
-        pageBean.setPrePage(currentPage-1);
-        pageBean.setNextPage(currentPage+1);
+        pageBean.setPrePage(currentPage - 1);
+        pageBean.setNextPage(currentPage + 1);
         //每页显示数据大小
         int pageSize = 2;
         pageBean.setPageSize(pageSize);
 
         //查询当前页需要的线路信息
-        int start = (currentPage-1)*pageSize;
+        int start = (currentPage - 1) * pageSize;
         List<Route> myFavoriteRouteList = favoriteDao.findMyFavoriteRouteByPage(uid, start, pageSize);
         pageBean.setRouteList(myFavoriteRouteList);
 
@@ -126,7 +128,7 @@ public class FavoriteServiceImpl implements FavoriteService {
         pageBean.setTotalCount(totalCount);
 
         //总页数
-        int totalPage =(int)Math.ceil(1.0 * totalCount/pageSize);
+        int totalPage = (int) Math.ceil(1.0 * totalCount / pageSize);
         pageBean.setTotalPage(totalPage);
         return pageBean;
     }

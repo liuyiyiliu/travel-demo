@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class CategoryDaoImpl implements CategoryDao {
     JdbcTemplate template = new JdbcTemplate(JDBCUtils.getDataSource());
+
     @Override
     public List<Category> findAllCategorys() {
         String sql = "select * from tab_category order by cid";

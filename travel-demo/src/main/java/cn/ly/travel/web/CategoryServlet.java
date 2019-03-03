@@ -13,9 +13,12 @@ import java.io.IOException;
  * @author ly
  * @date 2019/2/15 13:17
  */
-@WebServlet(name = "CategoryServlet",urlPatterns = "/categoryServlet")
+@WebServlet(name = "CategoryServlet", urlPatterns = "/categoryServlet")
 public class CategoryServlet extends BaseServlet {
-    private CategoryServiceImpl categoryService = (CategoryServiceImpl) BeansFactory.getBeans("categoryService");
+
+    private CategoryServiceImpl categoryService = (CategoryServiceImpl) BeansFactory
+            .getBeans("categoryService");
+
     public void findAllCategorys(HttpServletRequest req, HttpServletResponse res) throws IOException {
         //直接调用service获取所有的类型信息
         String json = categoryService.findAllCategorys();

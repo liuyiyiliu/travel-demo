@@ -18,9 +18,9 @@ public class UserDaoImpl implements UserDao {
 
         String sql = "select * from tab_user where telephone = ?";
         User user = null;
-        try{
-            user = template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class),phone);
-        }catch (EmptyResultDataAccessException e){
+        try {
+            user = template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), phone);
+        } catch (EmptyResultDataAccessException e) {
             System.out.println("没有查询到用户信息");
             e.printStackTrace();
         }
@@ -31,8 +31,8 @@ public class UserDaoImpl implements UserDao {
     public void save(User user) {
 
         String sql = "insert into tab_user values(?,?,?,?,?,?,?,?)";
-        template.update(sql,user.getUid(),user.getUsername(),user.getPassword(),user.getName(),
-                user.getBirthday(),user.getSex(),user.getTelephone(),user.getEmail());
+        template.update(sql, user.getUid(), user.getUsername(), user.getPassword(), user.getName(),
+                user.getBirthday(), user.getSex(), user.getTelephone(), user.getEmail());
     }
 
 

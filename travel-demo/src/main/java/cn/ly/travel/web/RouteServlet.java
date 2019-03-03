@@ -22,10 +22,12 @@ import java.util.Map;
  * @author ly
  * @date 2019/2/16 11:07
  */
-@WebServlet(name = "RouteServlet",urlPatterns = "/routeServlet")
+@WebServlet(name = "RouteServlet", urlPatterns = "/routeServlet")
 public class RouteServlet extends BaseServlet {
+
     private RouteService routeService = new RouteServiceImpl();
     private FavoriteService favoriteService = new FavoriteServiceImpl();
+
     public void chooseRoute(HttpServletRequest req, HttpServletResponse res) throws IOException {
         //直接调用service获取所有的类型信息
         String json = routeService.chooseRoute();
@@ -34,12 +36,13 @@ public class RouteServlet extends BaseServlet {
 
 
     }
-    public void findRouteByPage(HttpServletRequest request,HttpServletResponse response) throws IOException{
+
+    public void findRouteByPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         //1.获取当前页码数和指定的分类信息
         int currentPage = 1;
         String currentPageStr = request.getParameter("currentPage");
-        if(!StringUtils.isEmpty(currentPageStr)){
+        if (!StringUtils.isEmpty(currentPageStr)) {
             currentPage = Integer.parseInt(currentPageStr);
         }
         int cid = Integer.parseInt(request.getParameter("cid"));
@@ -64,7 +67,7 @@ public class RouteServlet extends BaseServlet {
         //获取页面的rid
         int rid = 0;
         String ridStr = req.getParameter("rid");
-        if(!StringUtils.isEmpty(ridStr)){
+        if (!StringUtils.isEmpty(ridStr)) {
             rid = Integer.parseInt(ridStr);
         }
         String json = routeService.findRouteDetailsByRid(rid);
@@ -76,16 +79,16 @@ public class RouteServlet extends BaseServlet {
         //首先判断用户是否登录
         User user = (User) req.getSession().getAttribute("user");
         String json = "";
-        if(user==null){
+        if (user == null) {
             //如果未登录，isShow显示为no,不显示收藏按钮
-            Map<String,String> map = new HashMap<>();
-            map.put("isShow","no");
+            Map<String, String> map = new HashMap<>();
+            map.put("isShow", "no");
             json = JSON.toJSONString(map);
-        }else{
+        } else {
             //如果已经登录，那么判断当前是否已经被收藏。
             //获取rid和uid
             int rid = Integer.parseInt(req.getParameter("rid"));
-            json  = favoriteService.findFavoriteByUidAndRid(rid, user.getUid());
+            json = favoriteService.findFavoriteByUidAndRid(rid, user.getUid());
 
         }
         //响应给浏览器
@@ -98,12 +101,12 @@ public class RouteServlet extends BaseServlet {
         //首先判断是否登录
         User user = (User) req.getSession().getAttribute("user");
         String json = "";
-        if(user == null){
+        if (user == null) {
             //未登录
-            Map<String,String> map = new HashMap<>();
-            map.put("message","noLogin");
+            Map<String, String> map = new HashMap<>();
+            map.put("message", "noLogin");
             json = JSON.toJSONString(map);
-        }else {
+        } else {
             //已经登录
             //获取需要收藏的旅游线路的id
             int rid = Integer.parseInt(req.getParameter("rid"));
@@ -116,12 +119,12 @@ public class RouteServlet extends BaseServlet {
 
     public void findMyFavoriteRouteByPage(HttpServletRequest req, HttpServletResponse res) throws IOException {
         //首先判断是否登录 未登录 先登录
-        User user = (User)req.getSession().getAttribute("user");
+        User user = (User) req.getSession().getAttribute("user");
         String json = "";
-        if(user==null){
+        if (user == null) {
             //未登录
-            Map<String,String> map = new HashMap<>();
-            map.put("isLogin","no");
+            Map<String, String> map = new HashMap<>();
+            map.put("isLogin", "no");
             json = JSON.toJSONString(map);
             res.getWriter().write(json);
             return;
@@ -130,7 +133,7 @@ public class RouteServlet extends BaseServlet {
         //获取需要查询指定的页码数的数据
         int currentPage = 1;
         String currentPageStr = req.getParameter("currentPage");
-        if(!StringUtils.isEmpty(currentPageStr)){
+        if (!StringUtils.isEmpty(currentPageStr)) {
             currentPage = Integer.parseInt(currentPageStr);
         }
         //调用service完成分页数据的查询
@@ -139,10 +142,11 @@ public class RouteServlet extends BaseServlet {
         res.getWriter().write(json);
 
     }
-    public void favoriteRankByPage(HttpServletRequest request,HttpServletResponse response) throws IOException {
+
+    public void favoriteRankByPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int currentpPage = 1;
         int currentPageStr = Integer.parseInt(request.getParameter("currentPage"));
-        if(!StringUtils.isEmpty(currentPageStr)){
+        if (!StringUtils.isEmpty(currentPageStr)) {
             currentpPage = currentPageStr;
         }
 
@@ -153,14 +157,15 @@ public class RouteServlet extends BaseServlet {
 
     /**
      * 通过路径名称和最低价格和最高价格，以分页的形式展示收藏排名
+     *
      * @param request
      * @param response
      * @throws IOException
      */
-    public void favoriteRankByPageByLike(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void favoriteRankByPageByLike(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int currentPage = 1;
         int currentPageStr = Integer.parseInt(request.getParameter("currentPage"));
-        if(!StringUtils.isEmpty(currentPageStr)){
+        if (!StringUtils.isEmpty(currentPageStr)) {
             currentPage = currentPageStr;
         }
         //获取搜索的条件
@@ -168,14 +173,14 @@ public class RouteServlet extends BaseServlet {
 
         double startPrice = 0;
         String startPriceStr = request.getParameter("startPrice");
-        if(!StringUtils.isEmpty(startPriceStr)){
+        if (!StringUtils.isEmpty(startPriceStr)) {
             startPrice = Double.parseDouble(startPriceStr);
 
         }
 
         double endPrice = 0;
         String endPriceStr = request.getParameter("endPrice");
-        if(!StringUtils.isEmpty(endPriceStr)){
+        if (!StringUtils.isEmpty(endPriceStr)) {
             endPrice = Double.parseDouble(endPriceStr);
 
         }

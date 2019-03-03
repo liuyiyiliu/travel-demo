@@ -24,6 +24,7 @@ public class User implements Serializable {
 
     /**
      * 有参构方法
+     *
      * @param uid
      * @param username
      * @param password
@@ -32,7 +33,6 @@ public class User implements Serializable {
      * @param sex
      * @param telephone
      * @param email
-
      */
     public User(int uid, String username, String password, String name, String birthday, String sex, String telephone, String email) {
         this.uid = uid;

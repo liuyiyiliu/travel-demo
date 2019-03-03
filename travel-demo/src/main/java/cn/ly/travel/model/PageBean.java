@@ -7,10 +7,9 @@ import java.util.List;
  * @date 2019/2/18 8:45
  */
 public class PageBean {
-/**
- * 分页代码
- *
- * */
+    /**
+     * 分页代码
+     */
     private int currentPage;
     private int prePage;
     private int nextPage;
@@ -48,7 +47,8 @@ public class PageBean {
         this.totalCount = totalCount;
     }
 
-    public PageBean(){}
+    public PageBean() {
+    }
 
     public int getCurrentPage() {
         return currentPage;

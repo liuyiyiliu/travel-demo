@@ -5,6 +5,7 @@ package cn.ly.travel.service;
  * @date 2019/2/15 13:29
  */
 public interface CategoryService {
+
     public String findAllCategorys();
 
 

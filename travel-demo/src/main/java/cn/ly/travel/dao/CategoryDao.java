@@ -9,5 +9,6 @@ import java.util.List;
  * @date 2019/2/15 13:26
  */
 public interface CategoryDao {
+
     public List<Category> findAllCategorys();
 }

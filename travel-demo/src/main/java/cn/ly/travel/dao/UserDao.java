@@ -8,6 +8,7 @@ import java.util.List;
 public interface UserDao {
 
     public User findUserByPhone(String phone);
+
     public void save(User user);
 
 }

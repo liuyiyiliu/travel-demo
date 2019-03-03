@@ -135,22 +135,22 @@ public class RouteDaoImpl implements RouteDao {
     public int findRouteCountByLike(String routeName, double startPrice, double endPrice) {
         String sql = "select count(*) from tab_route where 1=1";
         List<Object> paramsList = new ArrayList<>();
-        if(!StringUtils.isEmpty(routeName)){
+        if (!StringUtils.isEmpty(routeName)) {
             //如果名称不为空,sql语句加上名称条件
-            sql+=" and rname like ?";
-            paramsList.add("%"+routeName+"%");
+            sql += " and rname like ?";
+            paramsList.add("%" + routeName + "%");
         }
         //如果起始价格不为空,加上起始价格
-        if(startPrice>0){
-            sql+=" and price>? ";
+        if (startPrice > 0) {
+            sql += " and price>? ";
             paramsList.add(startPrice);
         }
         //如果最大价格不为空,那么加上最大价格的条件
-        if(endPrice>0){
-            sql+= " and price<?";
+        if (endPrice > 0) {
+            sql += " and price<?";
             paramsList.add(endPrice);
         }
-        System.out.println("查询数量的sql:"+sql);
+        System.out.println("查询数量的sql:" + sql);
         Object[] params = paramsList.toArray();
         Integer count = template.queryForObject(sql, Integer.class, params);
 
@@ -162,22 +162,22 @@ public class RouteDaoImpl implements RouteDao {
             startPrice, double endPrice) {
         String sql = "select * from tab_route where 1=1";
         List<Object> paramsList = new ArrayList<>();
-        if(!StringUtils.isEmpty(routeName)){
-            sql+=" and rname like ?";
-            paramsList.add("%"+routeName+"%");
+        if (!StringUtils.isEmpty(routeName)) {
+            sql += " and rname like ?";
+            paramsList.add("%" + routeName + "%");
         }
-        if(startPrice>0){
-            sql+=" and price>?";
+        if (startPrice > 0) {
+            sql += " and price>?";
             paramsList.add(startPrice);
         }
-        if(endPrice>0){
-            sql+=" and price<?";
+        if (endPrice > 0) {
+            sql += " and price<?";
             paramsList.add(endPrice);
         }
         paramsList.add(start);
         paramsList.add(length);
-        sql+=" order by count desc limit ?,?";
-        System.out.println("查询数量的sql:"+sql);
+        sql += " order by count desc limit ?,?";
+        System.out.println("查询数量的sql:" + sql);
         Object[] params = paramsList.toArray();
         List<Route> routeList = template.query(sql, new BeanPropertyRowMapper<Route>(Route.class), params);
         return routeList;

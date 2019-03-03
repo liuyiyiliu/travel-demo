@@ -11,17 +11,20 @@ import java.util.List;
  * @date 2019/2/16 11:17
  */
 public interface RouteDao {
+
     public List<Route> findHumanRoute();
+
     public List<Route> findNewRoute();
+
     public List<Route> findThemeRoute();
 
     public int findRouteCountByid(int cid);
 
-    public List<Route> findRouteByPageAndCid(int start,int length,int cid);
+    public List<Route> findRouteByPageAndCid(int start, int length, int cid);
 
-    public int findRouteCountByidAndname(int cid,String rname);
+    public int findRouteCountByidAndname(int cid, String rname);
 
-    public List<Route> findRouteBynameAndCid(int start,int length,int cid,String rname);
+    public List<Route> findRouteBynameAndCid(int start, int length, int cid, String rname);
 
     public Route findRouteDetailsByRid(int rid);
 
@@ -31,10 +34,10 @@ public interface RouteDao {
 
     public int findRouteCount();
 
-    public List<Route> findRouteFavoriteRankByPage(int start,int length);
+    public List<Route> findRouteFavoriteRankByPage(int start, int length);
 
-    public int findRouteCountByLike(String routeName,double startPrice,double endPrice);
+    public int findRouteCountByLike(String routeName, double startPrice, double endPrice);
 
-    public List<Route> findRouteFavoriteRankByPageLike(int start,int length,String routeName,
-                                                       double startPrice,double endPrice);
+    public List<Route> findRouteFavoriteRankByPageLike(int start, int length, String routeName,
+                                                       double startPrice, double endPrice);
 }

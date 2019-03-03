@@ -9,16 +9,17 @@ import cn.ly.travel.model.PageBean;
  */
 
 public interface RouteService {
+
     public String chooseRoute();
 
-    public PageBean findRouteByPage(int cid,int currentPage);
+    public PageBean findRouteByPage(int cid, int currentPage);
 
-    public PageBean findRouteByidAndname(int cid ,String rname,int currentPage);
+    public PageBean findRouteByidAndname(int cid, String rname, int currentPage);
 
     public String findRouteDetailsByRid(int rid);
 
     public PageBean favoriteRankByPage(int currentPage);
 
-    public PageBean favoriteRankByPageLike(int currentPage,String routeName,double
-            startPrice,double endPrice );
+    public PageBean favoriteRankByPageLike(int currentPage, String routeName, double
+            startPrice, double endPrice);
 }
